@@ -56,26 +56,19 @@ public class RoomController {
     @DeleteMapping(path = "/{id}")
     public void deleteHeaters(@PathVariable Long id) {
         heaterDao.deleteAllHeatersInRoom(id);
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public void deleteWindows(@PathVariable Long id) {
         windowDao.deleteAllWindowsInRoom(id);
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public void deleteRoom(@PathVariable Long id) {
         roomDao.deleteById(id);
     }
 
+
     @PutMapping(path = "/{id}/switchWindow")
-    public WindowDto switchStatus(@PathVariable Long id) {
+    public List<WindowDto> switchStatus(@PathVariable Long id) {
         Room room = roomDao.findById(id).orElseThrow(IllegalArgumentException::new);
         Set<Window> windows = room.getWindows();
         for(Window window : windows) {
             window.setWindowStatus(window.getWindowStatus() == WindowStatus.OPEN ? WindowStatus.CLOSED : WindowStatus.OPEN);
         }
-        return new WindowDto((Window) room.getWindows());
+        return room.getWindows().stream().map(WindowDto::new).collect(Collectors.toList());
     }
 
 }
