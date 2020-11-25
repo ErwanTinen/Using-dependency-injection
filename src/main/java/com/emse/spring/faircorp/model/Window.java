@@ -23,8 +23,7 @@ public class Window {
     public Window() {
     }
 
-    public Window(Long id, String name, WindowStatus status, Room room) {
-        this.id = id;
+    public Window(String name, WindowStatus status, Room room) {
         this.windowStatus = status;
         this.name = name;
         this.room = room;

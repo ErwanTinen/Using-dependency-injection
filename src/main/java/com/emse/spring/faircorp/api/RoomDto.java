@@ -1,57 +1,43 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.api;
 
-import javax.persistence.*;
+import com.emse.spring.faircorp.model.Heater;
+import com.emse.spring.faircorp.model.Room;
+import com.emse.spring.faircorp.model.Window;
+
 import java.util.Set;
 
-@Entity
-public class Room {
-    @Id
-    @GeneratedValue
+public class RoomDto {
     private Long id;
-
-    @Column(nullable=false)
     private Integer floor;
-
-    @Column(nullable=false)
     private String name;
-
     private Double currentTemperature;
-
     private Double targetTemperature;
-
-    @OneToMany(mappedBy = "room")
     private Set<Heater> heaters;
-
-    @OneToMany(mappedBy = "room")
     private Set<Window> windows;
 
-    public Room() {
+    public RoomDto() {
     }
 
-    public Room(String name,Integer floor) {
-        this.floor = floor;
-        this.name = name;
+    public RoomDto(Room room) {
+        this.id = room.getId();
+        this.floor = room.getFloor();
+        this.name = room.getName();
+        this.currentTemperature = room.getCurrentTemperature();
+        this.targetTemperature = room.getTargetTemperature();
+        this.heaters = room.getHeaters();
+        this.windows = room.getWindows();
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Integer getFloor() {
+        return floor;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public int getFloor() {
-        return floor;
     }
 
     public Double getCurrentTemperature() {
@@ -62,7 +48,6 @@ public class Room {
         return targetTemperature;
     }
 
-
     public Set<Heater> getHeaters() {
         return heaters;
     }
@@ -71,8 +56,16 @@ public class Room {
         return windows;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setFloor(Integer floor) {
         this.floor = floor;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setCurrentTemperature(Double currentTemperature) {
@@ -90,5 +83,4 @@ public class Room {
     public void setWindows(Set<Window> windows) {
         this.windows = windows;
     }
-
 }
