@@ -7,6 +7,9 @@ import com.emse.spring.faircorp.model.Window;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The DTO of a room
+ */
 public class RoomDto {
     private Long id;
     private Integer floor;

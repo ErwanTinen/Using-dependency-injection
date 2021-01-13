@@ -4,6 +4,9 @@ import com.emse.spring.faircorp.model.Heater;
 import com.emse.spring.faircorp.model.HeaterStatus;
 import com.emse.spring.faircorp.model.WindowStatus;
 
+/**
+ * The DTO of a Heater
+ */
 public class HeaterDto {
     private Long id;
     private String name;

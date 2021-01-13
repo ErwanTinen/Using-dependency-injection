@@ -19,6 +19,7 @@ class HeaterDaoTest {
     @Autowired
     private HeaterDao heaterDao;
 
+    //Test to see if the heater can be created and found properly
     @Test
     public void shouldFindAHeater() {
        Heater heater = heaterDao.getOne(-10L);
@@ -26,6 +27,7 @@ class HeaterDaoTest {
        Assertions.assertThat(heater.getHeaterStatus()).isEqualTo(HeaterStatus.ON);
     }
 
+    //Test the delete function
     @Test
     public void shouldNotFindHeatersInRoom(){
         List<Heater> result = heaterDao.deleteAllHeatersInRoom(-10L);

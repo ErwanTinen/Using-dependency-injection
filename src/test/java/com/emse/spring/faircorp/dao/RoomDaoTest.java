@@ -17,13 +17,14 @@ public class RoomDaoTest {
     @Autowired
     private RoomDao roomDao;
 
+    //Test if a room is found
     @Test
     public void shouldFindARoom() {
         Room room = roomDao.getOne(-10L);
         Assertions.assertThat(room.getName()).isEqualTo("Room1");
         Assertions.assertThat(room.getCurrentTemperature()).isEqualTo(22.3);
     }
-
+    //Test if a roomcan be found by name
     @Test
     public void shouldFindRoomByName() {
         List<Room> result = roomDao.findByName("Room1");

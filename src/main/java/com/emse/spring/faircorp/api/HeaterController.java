@@ -11,11 +11,13 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for Heaters, allow HTTP Requests
+ */
 @RestController // (1)
 @RequestMapping("/api/heaters") // (2)
 @Transactional // (3)
 public class HeaterController {
-
     private final HeaterDao heaterDao;
     private final RoomDao roomDao;
 
@@ -24,16 +26,19 @@ public class HeaterController {
         this.roomDao = roomDao;
     }
 
+    //Find every heater
     @GetMapping // (5)
     public List<HeaterDto> findAll() {
         return heaterDao.findAll().stream().map(HeaterDto::new).collect(Collectors.toList());  // (6)
     }
 
+    //Find a heater by id
     @GetMapping(path = "/{id}")
     public HeaterDto findById(@PathVariable Long id) {
         return heaterDao.findById(id).map(HeaterDto::new).orElse(null); // (7)
     }
 
+    //Update Heater Status
     @PutMapping(path = "/{id}/switch")
     public HeaterDto switchStatus(@PathVariable Long id) {
         Heater heater = heaterDao.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -41,6 +46,7 @@ public class HeaterController {
         return new HeaterDto(heater);
     }
 
+    //Create Heater
     @PostMapping // (8)
     public HeaterDto create(@RequestBody HeaterDto dto) {
         // HeaterDto must always contain the heater room
@@ -63,6 +69,7 @@ public class HeaterController {
         return new HeaterDto(heater);
     }
 
+    //
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         heaterDao.deleteById(id);

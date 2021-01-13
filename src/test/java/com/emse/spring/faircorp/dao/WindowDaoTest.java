@@ -17,7 +17,7 @@ import java.util.List;
 class WindowDaoTest {
     @Autowired
     private WindowDao windowDao;
-
+    //Test if a specific window can be found
     @Test
     public void shouldFindAWindow() {
         Window window = windowDao.getOne(-10L);
@@ -25,6 +25,7 @@ class WindowDaoTest {
         Assertions.assertThat(window.getWindowStatus()).isEqualTo(WindowStatus.CLOSED);
     }
 
+    //Test If a specific window can be found
     @Test
     public void shouldFindRoomOpenWindows() {
         List<Window> result = windowDao.findRoomOpenWindows(-9L);
@@ -34,12 +35,14 @@ class WindowDaoTest {
                 .containsExactly(Tuple.tuple(-8L, WindowStatus.OPEN));
     }
 
+    //See if there is a problem with find open windows in room ( when there are none)
     @Test
     public void shouldNotFindRoomOpenWindows() {
         List<Window> result = windowDao.findRoomOpenWindows(-10L);
         Assertions.assertThat(result).isEmpty();
     }
 
+    //Delete all the windows in a room test
     @Test
     public void shouldNotFindWindowsInRoom(){
         List<Window> result = windowDao.deleteAllWindowsInRoom(-10L);

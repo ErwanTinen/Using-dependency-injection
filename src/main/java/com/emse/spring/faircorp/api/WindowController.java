@@ -11,6 +11,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for windows, allow HTTP requests
+ */
 @RestController // (1)
 @RequestMapping("/api/windows") // (2)
 @Transactional // (3)
@@ -24,16 +27,19 @@ public class WindowController {
         this.roomDao = roomDao;
     }
 
+    // Get all the Windows
     @GetMapping // (5)
     public List<WindowDto> findAll() {
         return windowDao.findAll().stream().map(WindowDto::new).collect(Collectors.toList());  // (6)
     }
 
+    // Find a specific Window with its ID
     @GetMapping(path = "/{id}")
     public WindowDto findById(@PathVariable Long id) {
         return windowDao.findById(id).map(WindowDto::new).orElse(null); // (7)
     }
 
+    // Update the status of a Window
     @PutMapping(path = "/{id}/switch")
     public WindowDto switchStatus(@PathVariable Long id) {
         Window window = windowDao.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -41,6 +47,7 @@ public class WindowController {
         return new WindowDto(window);
     }
 
+    // Create Window
     @PostMapping // (8)
     public WindowDto create(@RequestBody WindowDto dto) {
         // WindowDto must always contain the window room
@@ -57,6 +64,7 @@ public class WindowController {
         return new WindowDto(window);
     }
 
+    //Delete Window
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         windowDao.deleteById(id);

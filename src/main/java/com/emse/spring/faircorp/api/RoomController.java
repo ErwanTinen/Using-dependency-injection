@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for rooms, allow HTTP requests
+ */
 @RestController // (1)
 @RequestMapping("/api/rooms") // (2)
 @Transactional // (3)
@@ -28,16 +31,19 @@ public class RoomController {
         this.windowDao = windowDao;
     }
 
+    // Get every rooms
     @GetMapping // (5)
     public List<RoomDto> findAll() {
         return roomDao.findAll().stream().map(RoomDto::new).collect(Collectors.toList());  // (6)
     }
 
+    // Get a specific room by id
     @GetMapping(path = "/{id}")
     public RoomDto findById(@PathVariable Long id) {
         return roomDao.findById(id).map(RoomDto::new).orElse(null); // (7)
     }
 
+    // Create a Room
     @PostMapping // (8)
     public RoomDto create(@RequestBody RoomDto dto) {
         // WindowDto must always contain the window room
@@ -53,6 +59,7 @@ public class RoomController {
         return new RoomDto(room);
     }
 
+    // Delete all the Heaters in a room
     @DeleteMapping(path = "/{id}")
     public void deleteHeaters(@PathVariable Long id) {
         heaterDao.deleteAllHeatersInRoom(id);
@@ -61,6 +68,7 @@ public class RoomController {
     }
 
 
+    // Update the status of a Window in a room
     @PutMapping(path = "/{id}/switchWindow")
     public List<WindowDto> switchStatus(@PathVariable Long id) {
         Room room = roomDao.findById(id).orElseThrow(IllegalArgumentException::new);
